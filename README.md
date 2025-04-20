@@ -1,5 +1,12 @@
 # SteamWebTools - various steam tools, that are not present in steam client, for average users
 Deployed version: [Here](https://shporgalka-nope.github.io/SteamWebTools/)
 
+---
+
 Current functionality:
-- Collection weight viewer - Currently steam has no way to see how much does a certain collection of addons weight, this tool is designed to calculate the approximate weight of given collection in MBs. First you need to gain a temp access to cordsanywhere service, it is vital for the tool because without some headers steam API wont process the request, and cordsanywhere provides these headers.
+- **Collection Weight Viewer**
+
+Currently, Steam has no built-in way to check the total file size (in MB) of a collection of addons. This tool calculates the approximate weight of a given collection.  
+
+**Temporary Access Required** – You first need to grant temporary access to the *CordsAnywhere* service.  
+**Why CordsAnywhere?** – Steam's API requires specific headers to process the request, and *CordsAnywhere* provides them.
