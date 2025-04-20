@@ -11,20 +11,39 @@ input[type="url"] {
     height: 25px;
     overflow: scroll;
 
-    border: solid #2a475e 4px;
+    /* border: solid #2a475e 4px; */
+    border-style: solid;
+    border-width: 4px;
     border-radius: 5px;
-
     color: black;
+
+    animation: unselected 0.1s 1 ease-in forwards;
 }
 
 input[type="url"]:hover {
     height: 25px;
     overflow: scroll;
 
-    border: #66c0f4 solid 4px;
+    /* border: #66c0f4 solid 4px; */
+    border-style: solid;
+    border-width: 4px;
     border-radius: 5px;
-
     color: black;
+
+    animation: selected 0.1s 1 ease-in forwards;
+}
+
+@keyframes selected {
+    to {
+        border: #66c0f4 solid 4px;
+        box-shadow: 0px 0px 2px 1px  #66c0f4;
+    }
+}
+
+@keyframes unselected {
+    to {
+        border: #2a475e solid 4px;
+    }
 }
 
 input[type="submit"] {
@@ -41,10 +60,12 @@ input[type="submit"] {
 input[type="submit"]:hover {
     border: #66c0f4 solid 4px;
     animation: none;
+    box-shadow: 0px 0px 2px 1px  #66c0f4;
 }
 
 input[type="submit"]:disabled {
     animation: loading-anim 2s infinite;
+    box-shadow: none;
 }
 
 a {
@@ -227,11 +248,14 @@ color: white;
 @keyframes loading-anim {
     from {
         border-color: #66c0f4;
+        box-shadow: 0px 0px 2px 1px  #66c0f4;
     }
     50% {
         border-color: #2a475e;
+        box-shadow: none;
     }
     to {
         border-color: #66c0f4;
+        box-shadow: 0px 0px 2px 1px  #66c0f4;
     }
 }
