@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Font preload -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
         <link href="cs/style.css" rel="stylesheet"/>
     </head>
     <body>
         <script defer src="js/query.js"></script>
-
-        <div class="header flex pos-centre">
-            <p>A</p>
-        </div>
-        <form id="formId">
-            <label>Collection Id:
+        <div class="block">
+            <div class="header flex flex-centre">
+                <img class="header-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1024px-Steam_icon_logo.svg.png"/>
+                <p class="montserrat-600 overlay" style="margin-left: 25px; font-size: 32px;">Art's Steam Web Tools</p>
+            </div>
+    
+            <div class="content flex flex-centre flex-column">
                 <br />
-                <input type="text" id="collectionId-input"/>
-                <input type="hidden" id="collectionCount-input" value="0"/>
-                <input type="submit" id="post-input"/>
-            </label>
-        </form>
+                <p class="montserrat-300" style="font-size: 24px;">Before usage: Please follow the instructions from <a href="https://cors-anywhere.herokuapp.com/" target="_blank">here</a></p>
+                <form id="formId">
+                    <label class="montserrat-300" style="font-size: 24px;">Collection link:</label>
+                        <br />
+                        <input required type="url" id="collectionId-input" style="width: 600px;"/>
+                        <input type="hidden" id="collectionCount-input" value="0"/>
+                        <input type="submit" value="Check" id="post-input"/>
+                </form>
+                <p id="validation-errors" class="montserrat-300" style="color: red; font-size: 18px;"></p>
+                
+                <div id="list-div" class="flex" style="margin: 15px ;">
+                    <p id="weight-p" class="montserrat-300" style="font-size: 18px;"></p>
+                    
+                    <ul id="listElement" style="list-style-type: none;">
+                    </ul>
+                </div>
+                    
+            </div>
+        </div>
     </body>
 </html>
