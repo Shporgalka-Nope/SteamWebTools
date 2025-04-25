@@ -25,18 +25,24 @@ document.getElementById('formId').addEventListener('submit', async (e) => {
     buttonElement.disabled = true;
     weightText.innerText = '';
     listElement.innerHTML = '';
+    validationText.innerText = '';
     listDiv.style.display = 'none';
 
     let collectionId = getId(document.getElementById('collectionId-input').value);
     console.log(collectionId);
 
-    let collectionParams = new FormData(e.target);
-    collectionParams.append('collectioncount', '1');
-    collectionParams.append('publishedfileids[0]', `${collectionId}`);
-    weightText.innerText = `Collection size: ${await Submit(collectionFetch, collectionParams)} (Without required items)`;
+    try {
+        let collectionParams = new FormData(e.target);
+        collectionParams.append('collectioncount', '1');
+        collectionParams.append('publishedfileids[0]', `${collectionId}`);
+        weightText.innerText = `Collection size: ${await Submit(collectionFetch, collectionParams)} (Without required items)`;
+        listDiv.style.display = 'block';
+    } catch(err) {
+        validationText.innerText = "Request error:", err.message;
+    } finally {
+        buttonElement.disabled = false;
+    }
 
-    listDiv.style.display = 'block';
-    buttonElement.disabled = false;
 });
 
 const valid = document.getElementById('collectionId-input');
@@ -56,12 +62,19 @@ function getId(link) {
 
 
 async function Submit(fetchTarget, formParams) {
+    console.log('Initianing submit method');
     //Initial search for collection details
     let data = await fetch(fetchTarget, {
         method: 'POST',
         body: formParams,
     })
-    .then((response) => { if(response.ok) return response.json(); });
+    .then((response) => 
+        { 
+            if(response.ok) {
+                console.log('Initial fetch succesful');
+                return response.json(); 
+            } 
+        });
     
     //Searching for each item id
     let itemIds = new Array();
@@ -70,15 +83,23 @@ async function Submit(fetchTarget, formParams) {
     //Getting each item's info
     let itemsList = new Array();
     let totalWeight = 0;
+    console.log('Initianing item info search');
     for (const item of itemIds) {
         let itemParams = new FormData();
         itemParams.append('itemcount', '1');
         itemParams.append('publishedfileids[0]', `${item}`);
+        console.log('Initianing itemFetch');
         totalWeight += await fetch(itemInfoFetch, {
             method: 'POST',
             body: itemParams,
         })
-        .then((response) => {if(response.ok) return response.json(); })
+        .then((response) => 
+            {
+                if(response.ok) {
+                    console.log('itemFetch succesfull');
+                    return response.json(); 
+                } 
+            })
         .then((data) => { 
             //Creating item object
             let modTitle = data.response.publishedfiledetails[0].title;
@@ -90,7 +111,7 @@ async function Submit(fetchTarget, formParams) {
         });
     }
     let result = `~${totalWeight.toFixed(2)}MB`;
-    console.log(result);
+    console.log('Calculation done ', result);
     console.log(itemsList.length);
     CreateFromArray(itemsList);
     return result;
